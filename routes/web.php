@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,10 @@ Route::get('/add-to-cart/{item}', [App\Http\Controllers\CartController::class, '
 Route::get('/cart/destroy/{item}', [App\Http\Controllers\CartController::class, 'destroyItem'])->name('cart.destroy');
 Route::get('/cart/update/{item}', [App\Http\Controllers\CartController::class, 'updateItem'])->name('cart.update');
 Route::post('/cart/checkout', [App\Http\Controllers\CartController::class, 'showCheckout'])->name('cart.checkout');
+
+//Order
+Route::resource('orders', OrderController::class);
+
 
 
 //Admin

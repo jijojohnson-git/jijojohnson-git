@@ -30,6 +30,8 @@
 
 
 <section id="checkout-main" class="checkout-main pb-10" style="padding:1rem 0;">
+    <form method="POST" action="{{route('orders.store')}}">
+        @csrf
 <div class="container">
 <div class="checkout-inner">
 <!-- <div class="checkout-coupon mb-4 bg-red white">Have a coupon? <a href="#" class="showcoupon white">Click here to enter your code</a>
@@ -40,14 +42,13 @@
 <div class="checkout-info">
 <h4 class="white">Billing details</h4>
 <div class="checkout-billing">
-<form method="post" target="_blank">
 <div class="form-group">
 <label class="white">First Name: <abbr class="required" title="required">*</abbr></label>
 <input type="text" name="first" class="form-control">
 </div>
 <div class="form-group">
 <label class="white">Last Name: <abbr class="required" title="required">*</abbr></label>
- <input type="text" name="first" class="form-control">
+ <input type="text" name="last" class="form-control">
 </div>
 <!-- <div class="form-group">
 <label class="white">City / Town <abbr class="required" title="required">*</abbr></label>
@@ -63,13 +64,13 @@
 </div> -->
 
 <div class="form-group">
-<label class="white">Street Address: <abbr class="required" title="required">*</abbr></label>
-<input type="text" name="street" class="form-control">
+<label class="white">Address: <abbr class="required" title="required">*</abbr></label>
+<textarea name="address" class="form-control"></textarea>
 </div>
-<div class="form-group">
+{{-- <div class="form-group">
 <label class="white">Postcode / ZIP (optional):</label>
 <input type="text" name="postcode" class="form-control">
-</div>
+</div> --}}
 <div class="form-group">
 <label class="white">Phone No.: <abbr class="required" title="required">*</abbr></label>
 <input type="text" name="phone" class="form-control">
@@ -78,7 +79,7 @@
 <label class="white">Email Address: <abbr class="required" title="required">*</abbr></label>
 <input type="text" name="email" class="form-control">
 </div>
-</form>
+{{-- </form> --}}
 </div>
 </div>
 </div>
@@ -158,10 +159,11 @@
 <div class="checkout-place-order">
 <p class="white">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#" class="red">privacy policy</a>.
 </p>
-<a href="#" class="nir-btn mt-1">Place Order</a>
+<button type="submit" class="nir-btn mt-1">Place Order</button>
 </div>
 </div>
 </div>
+</form>
 </section>
 
 @endsection
