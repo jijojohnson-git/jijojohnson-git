@@ -36,12 +36,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $method = $request->method;
         $request->validate([
             'first' => 'required',
             'last' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'payment' => 'required'
         ]);
         $session_id = session()->getId();
         $last_id = Order::all()->last()->id;
@@ -52,11 +54,12 @@ class OrderController extends Controller
         $order->email = $request->email;
         $order->address = $request->address;
         $order->phone = $request->phone;
+        $order->payment_method = $request->payment;
 
         $order->grand_total = \Cart::session($session_id)->getTotal();
         $order->item_count = \Cart::session($session_id)->getContent()->count();
         $order->save();
-
+        $order_id = $order->id;
         // dd('order created' , $order);
 
         $cartItems = \Cart::session($session_id)->getContent();
@@ -71,7 +74,8 @@ class OrderController extends Controller
         //send email
 
         //Thank you Page
-        return view('done');
+        $order_detail = Order::findOrFail($order_id);
+        return view('summary', compact('order_detail'));
     }
 
     /**

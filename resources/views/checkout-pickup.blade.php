@@ -77,7 +77,7 @@
 </div>
 <div class="form-group">
 <label class="white">Email Address: <abbr class="required" title="required">*</abbr></label>
-<input type="text" name="email" class="form-control">
+<input type="text" name="email" class="form-control" required>
 </div>
 {{-- </form> --}}
 </div>
@@ -89,32 +89,47 @@
 <h4 class="white">Order Details</h4>
 <div class="order-list">
 <table class="shop_table rt-checkout-review-order-table bg-white">
-<thead>
+<tbody>
 <tr>
-<th class="product-name">Product</th>
-<th class="product-total">Burger</th>
+<th class="product-name">Item(s):</th>
+
+<td class="product-total">
+
+    <ol>
+        @foreach ($items as $item )
+            <li>{{$item->name}}
+            <i class="badge badge-info">
+                {{$item->quantity}}
+            </i>
+            </li>
+        @endforeach
+    </ol>
+
+</td>
+
+
 </tr>
 <tr>
-    <th class="product-name">Product Price</th>
-    <th class="product-total"><i class="fa fa-eur" aria-hidden="true"></i>9.00</th>
+    <th class="product-name">Pickup Address: </th>
+    <td class="product-total">
+        206, TRIQ COSPICO
+    </td>
     </tr>
-</thead>
-<tbody>
     <tr>
-        <th class="product-name">Quantity</th>
-        <th class="product-total">1</th>
+        <th class="product-name">Pickup Time:</th>
+        <td class="product-total">15-20 minutes </td>
         </tr>
+
+        {{-- <tr>
+            <th>Delivery Cost</th>
+            <td><i class="fa fa-eur" aria-hidden="true"></i>1.00</td>
+        </tr> --}}
+
 </tbody>
 <tfoot>
-
-<tr>
-<th>Delivery Cost</th>
-<td><i class="fa fa-eur" aria-hidden="true"></i>1.00</td>
-</tr>
-
 <tr class="order-total">
-<th>Order total</th>
-<td><strong><span class="rt-Price-amount"><i class="fa fa-eur" aria-hidden="true"></i>10.00</strong> </td>
+<th>Total: </th>
+<td><strong><span class="rt-Price-amount"><i class="fa fa-eur" aria-hidden="true"></i>{{Cart::session($session_id)->getTotal()}}</strong> </td>
 </tr>
 </tfoot>
 </table>
@@ -157,8 +172,32 @@
 </div> -->
 </div>
 <div class="checkout-place-order">
-<p class="white">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#" class="red">privacy policy</a>.
-</p>
+{{-- <p class="white"> --}}
+    {{-- Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#" class="red">privacy policy</a>. --}}
+    {{-- Your personal data will be used to process your order. --}}
+    {{-- </p> --}}
+<div class="form-group">
+    <h4 class="white">
+         Payment Method:
+        {{-- Billing details --}}
+    </h4>
+    {{-- <input type="radio" class="form-control" value="cash" name="payment" required>Cash
+    <input type="radio" class="form-control" value="cash" name="payment" required>Card Swipe --}}
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="payment" id="cash" value="cash" required>
+        <label class="form-check-label text-light" for="cash">
+         Cash
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payment" id="card" value="other" required>
+        <label class="form-check-label text-light" for="card">
+          Card Swipe
+        </label>
+      </div>
+</div>
+<input type="hidden" name="method" value="pickup">
 <button type="submit" class="nir-btn mt-1">Place Order</button>
 </div>
 </div>

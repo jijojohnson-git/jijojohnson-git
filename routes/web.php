@@ -28,7 +28,7 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::get('/add-to-cart/{item}', [App\Http\Controllers\CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/destroy/{item}', [App\Http\Controllers\CartController::class, 'destroyItem'])->name('cart.destroy');
 Route::get('/cart/update/{item}', [App\Http\Controllers\CartController::class, 'updateItem'])->name('cart.update');
-Route::post('/cart/checkout', [App\Http\Controllers\CartController::class, 'showCheckout'])->name('cart.checkout');
+Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'showCheckout'])->name('cart.checkout');
 
 //Order
 Route::resource('orders', OrderController::class);

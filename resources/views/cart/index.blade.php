@@ -212,7 +212,7 @@
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <form action="{{route('cart.checkout')}}" method="POST">
+            <form action="{{route('cart.checkout')}}" method="GET">
                 @csrf
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">Which do you prefer ?</h5>

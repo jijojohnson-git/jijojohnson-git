@@ -58,14 +58,20 @@ class CartController extends Controller
 
    public function showCheckout(Request $request)
    {
+    $session_id = session()->getId();
+    $items = \Cart::session($session_id)->getContent();
+    // $price = Cart::session($session_id)->get($item->id)->getPriceSum();
+
         $method = $request->method;
         if($method == 'delivery')
         {
-            return view('checkout-delivery');
+            return view('checkout-delivery', compact('items'), ['session_id'=> $session_id]);
         }
-        else
+        elseif($method == 'pickup')
         {
-            return view('checkout-pickup');
+            return view('checkout-pickup', compact('items'), ['session_id'=> $session_id]);
         }
    }
+
+
 }
