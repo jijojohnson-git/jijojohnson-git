@@ -31,6 +31,8 @@ Route::get('/cart/update/{item}', [App\Http\Controllers\CartController::class, '
 Route::get('/cart/checkout', [App\Http\Controllers\CartController::class, 'showCheckout'])->name('cart.checkout');
 
 //Order
+Route::get('/order/summary/{id}', [App\Http\Controllers\OrderController::class, 'showOrderSummary'])->name('order.summary');
+Route::get('/order/summary/{id}/export', [App\Http\Controllers\OrderController::class, 'exportOrderSummary'])->name('order.summary.export');
 Route::resource('orders', OrderController::class);
 
 

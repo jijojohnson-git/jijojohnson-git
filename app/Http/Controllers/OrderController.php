@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rules\Unique;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -75,9 +77,35 @@ class OrderController extends Controller
 
         //Thank you Page
         $order_detail = Order::findOrFail($order_id);
-        return view('summary', compact('order_detail'));
+        $encrypt_id = Crypt::encrypt($order_id);
+        // return redirect()->route('order.summary')->with(['order_detail' => $order_detail]);
+        return redirect()->route('order.summary', $encrypt_id);
     }
 
+    public function showOrderSummary($id)
+    {
+        $decrypt_id = Crypt::decrypt($id);
+        $order_detail = Order::findOrFail($decrypt_id);
+        return view('summary', compact('order_detail'));
+    }
+    public function exportOrderSummary($id)
+    {
+
+        $order_detail = Order::findOrFail($id);
+        // dd($order_detail);
+        $order_no = $order_detail->order_no;
+        // share data to view
+        view()->share('order_detail', $order_detail);
+        $pdf = PDF::loadView('order-summary-export', $order_detail)->setPaper('a4', 'portrait');
+
+      // download PDF file with download method
+        // return $pdf->download('Invoice-'.$order_no.'.pdf');
+      return $pdf->stream('Invoice-'.$order_no.'.pdf', array('Attachment'=>0));
+
+        // $decrypt_id = Crypt::decrypt($id);
+        // $order_detail = Order::findOrFail($decrypt_id);
+        // return view('summary', compact('order_detail'));
+    }
     /**
      * Display the specified resource.
      *
