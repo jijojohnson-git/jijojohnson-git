@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderPlacedAdmin;
+use App\Mail\OrderPlacedGuest;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Unique;
 use PDF;
 
@@ -75,8 +78,14 @@ class OrderController extends Controller
 
         //send email
 
-        //Thank you Page
+        //send mail to user
         $order_detail = Order::findOrFail($order_id);
+        Mail::to($order_detail->email)->queue(new OrderPlacedGuest($order_detail));
+
+        //send mail to admin
+        // Mail::to()->queue(new OrderPlacedAdmin($order_detail));
+
+        //Thank you Page
         $encrypt_id = Crypt::encrypt($order_id);
         // return redirect()->route('order.summary')->with(['order_detail' => $order_detail]);
         return redirect()->route('order.summary', $encrypt_id);

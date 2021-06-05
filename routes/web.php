@@ -53,6 +53,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
 });
 Route::get('/contact', [App\Http\Controllers\MasterController::class, 'showContact']);
 
-Auth::routes();
+Auth::routes([
+    'register'=> false
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
